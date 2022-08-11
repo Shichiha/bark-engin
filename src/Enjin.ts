@@ -24,22 +24,13 @@ interface ArcObject extends GameObject {
   type: 'arc'
 }
 
-class BarkEngine {
-  public WorldToScreen (position: Vector3): Vector2 {
-    return {
-      x: position.x,
-      y: position.y
-    }
-  }
-}
-
-class Scene {
+class Renderer {
   ctx: CanvasRenderingContext2D
-
-  constructor (ctx: CanvasRenderingContext2D) {
-    this.ctx = ctx
+  objects: GameObject[] = []
+  constructor (ctx: CanvasRenderingContext2D, objects: GameObject[]) {
+    this.ctx = ctx,
+    this.objects = objects
   }
-
   public DrawRect (object: RectObject) {
     this.ctx.fillStyle = `rgb(${object.color}, ${object.color}, ${object.color})`
     this.ctx.fillRect(
@@ -72,8 +63,24 @@ class Scene {
       }
     })
   }
-
-  public Clear () {
-    this.ctx.clearRect(0, 0, this.ctx.canvas.width, this.ctx.canvas.height)
-  }
 }
+
+let Canvas = document.getElementById('canvas') as HTMLCanvasElement;
+let ctx = Canvas.getContext('2d') as CanvasRenderingContext2D;
+let objects: GameObject[] = [
+  {
+    position: { x: 0, y: 0, z: 0 },
+    size: { x: 100, y: 100 },
+    color: 123,
+    type: 'rect'
+  },
+  {
+    position: { x: 200, y: 200, z: 0 },
+    size: { x: 100, y: 100 },
+    color: 234,
+    type: 'arc'
+  }
+]
+let renderer = new Renderer(ctx, objects)
+renderer.Draw(objects)
+

@@ -3,13 +3,14 @@
 learning repository
 
 # roadmap
+not done is marked with ❌ while done is marked with ✅
 
 | Type  |                 Detail                  | Done |
 |-------|-----------------------------------------|------|
-| FIXME | Better Jumping                          | ✅   |
+| TODO  | Movement                                | ❌   |
 | TODO  | maybe add z axis to the game? (fake 3d) | ❌   |
 | TODO  | zoom in/out                             | ❌   |
-| TODO  | Reimplement Hotkeys                     | ❌   |
+| TODO  | Implement Hotkeys                       | ❌   |
 | TODO  | UI System                               | ❌   |
-| TODO  | Better Gravity System                   | ❌   |
+| TODO  | Gravity System                          | ❌   |
 
