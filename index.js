@@ -1,8 +1,3 @@
-// shichihachi bored
-// todo: maybe add z axis to the game? (fake 3d)
-// todo: zoom in/out
-// tofix: low fps, slow movement :(
-
 let gamecvs = document.getElementById('canvas')
 let ctx = gamecvs.getContext('2d')
 
