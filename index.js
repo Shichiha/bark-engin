@@ -132,8 +132,8 @@ function GameLogic () {
   if (kl.keys[40]) {
     player.y += pspeed
   }
-  if (kl.keys[38]) {
-    player.y -= 100
+  if (kl.keys[38] && onground) {
+    player.y -= pspeed
   }
 
   if (player.x < 0) player.x = 0
@@ -150,7 +150,7 @@ function GameLogic () {
     gravityAcceleration += (player.y / gamecvs.height) * 0.9
     player.y += gravity * gravityAcceleration
   } else {
-    gravityAcceleration = 0
+    gravityAcceleration = -10
   }
 }
 
