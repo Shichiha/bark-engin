@@ -1,10 +1,10 @@
 {
   "name": "bark-engin",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "learning repository",
   "main": "index.js",
   "scripts": {
-    "build": "tsc src/Enjin.ts --target esnext --outfile index.js"
+    "build": "tsc src/Enjin.ts --target esnext --outfile index.js && npm version patch"
   },
   "repository": {
     "type": "git",
