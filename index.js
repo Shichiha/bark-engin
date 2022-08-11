@@ -108,10 +108,12 @@ let player = new RectObj(
   '#00ff00',
   1
 )
-let test_cube = new RectObj(0, 450, 20, 20, '#ff0000', 1)
+let elavator = new RectObj(0, 420 , 20, 20, '#ffffff', 1)
+let quicksand = new RectObj(350, 435, 20, 20, '#FFFF00', 1)
 
 engine.scene.add(player)
-engine.scene.add(test_cube)
+engine.scene.add(elavator)
+engine.scene.add(quicksand)
 
 let kl = new KeyLogic()
 
@@ -142,8 +144,12 @@ function GameLogic () {
     player.x = gamecvs.width - player.width
   if (player.y > gamecvs.height - player.height)
     player.y = gamecvs.height - player.height
-  if (collision.checkCollision(player, test_cube)) {
+  if (collision.checkCollision(player, elavator)) {
     player.y -= 1
+    onground = true
+  }
+  if (collision.checkCollision(player, quicksand)) {
+    player.y -= -1
     onground = true
   }
   if (!onground) {
