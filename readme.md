@@ -6,7 +6,7 @@ learning repository
 
 | Type  |                 Detail                  | Done |
 |-------|-----------------------------------------|------|
-| FIXME | Better Jumping                          | ❌   |
+| FIXME | Better Jumping                          | ✅   |
 | TODO  | maybe add z axis to the game? (fake 3d) | ❌   |
 | TODO  | zoom in/out                             | ❌   |
 | TODO  | Reimplement Hotkeys                     | ❌   |

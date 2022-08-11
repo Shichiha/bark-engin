@@ -74,10 +74,12 @@ class GameEngine {
 
 class Collision {
   checkCollision (obj1, obj2) {
-    return obj1.x < obj2.x + obj2.width &&
+    return (
+      obj1.x < obj2.x + obj2.width &&
       obj1.x + obj1.width > obj2.x &&
       obj1.y < obj2.y + obj2.height &&
       obj1.height + obj1.y > obj2.y
+    )
   }
 }
 
@@ -118,8 +120,7 @@ let player = new RectObj(
   '#00ff00',
   1
 )
-let test_cube = new RectObj( 0, 450, 20, 20, '#ff0000', 1)
-
+let test_cube = new RectObj(0, 450, 20, 20, '#ff0000', 1)
 
 engine.scene.add(player)
 engine.scene.add(test_cube)
@@ -147,21 +148,24 @@ function GameLogic () {
   kl.checkKey(38, () => {
     player.y -= pspeed
   })
-  // if ball and player collide, console.log('collide')
-  if (collision.checkCollision(player, test_cube)) {
-    console.log('collide')
-  } else {
-    console.log('not collide')
-  }
+
   if (player.x < 0) player.x = 0
   if (player.y < 0) player.y = 0
   if (player.x > gamecvs.width - player.width)
     player.x = gamecvs.width - player.width
   if (player.y > gamecvs.height - player.height)
     player.y = gamecvs.height - player.height
+  if (collision.checkCollision(player, test_cube)) {
+    player.y -= 1
+    onground = true
+    console.log(onground)
+  }
   if (!onground) {
+    console.log(onground)
     gravityAcceleration += (player.y / gamecvs.height) * 0.9
     player.y += gravity * gravityAcceleration
+  } else {
+    gravityAcceleration = 0
   }
 }
 
