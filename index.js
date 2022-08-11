@@ -93,17 +93,6 @@ class KeyLogic {
       this.keys[e.keyCode] = false
     })
   }
-
-  addKey (key, callback, type) {
-    this.keys[key] = false
-    document.addEventListener(type, e => {
-      if (e.keyCode === key) callback()
-    })
-  }
-
-  checkKey (key, callback) {
-    if (this.keys[key]) callback()
-  }
 }
 
 // Main Game Logic
@@ -134,18 +123,18 @@ let collision = new Collision()
 
 function GameLogic () {
   let onground = player.y + player.height >= gamecvs.height - 1
-  kl.checkKey(37, () => {
+  if (kl.keys[37]) {
     player.x -= pspeed
-  })
-  kl.checkKey(39, () => {
+  }
+  if (kl.keys[39]) {
     player.x += pspeed
-  })
-  kl.checkKey(40, () => {
+  }
+  if (kl.keys[40]) {
     player.y += pspeed
-  })
-  kl.checkKey(38, () => {
-    player.y -= pspeed
-  })
+  }
+  if (kl.keys[38]) {
+    player.y -= 100
+  }
 
   if (player.x < 0) player.x = 0
   if (player.y < 0) player.y = 0
