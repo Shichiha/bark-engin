@@ -71,16 +71,31 @@ let objects: GameObject[] = [
   {
     position: { x: 0, y: 0, z: 0 },
     size: { x: 100, y: 100 },
-    color: 123,
+    color: 255,
     type: 'rect'
-  },
-  {
-    position: { x: 200, y: 200, z: 0 },
-    size: { x: 100, y: 100 },
-    color: 234,
-    type: 'arc'
   }
 ]
-let scene = new Scene(objects)
-let renderer = new Renderer(ctx, scene)
-renderer.Draw()
+
+class GameEngine {
+  fps: number = 60
+  scene: Scene
+  renderer: Renderer
+  context: CanvasRenderingContext2D
+  constructor (fps, context) {
+    this.fps = fps
+    this.scene = new Scene([]);
+    this.renderer = new Renderer(context, this.scene) 
+  }
+  draw () {
+    this.renderer.Draw()
+  }
+}
+
+let game = new GameEngine(1, ctx)
+game.scene.objects = objects
+
+function mainGame () {
+    game.draw()
+}
+
+setInterval(mainGame, 1000 / game.fps)
