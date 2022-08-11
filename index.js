@@ -110,7 +110,6 @@ class KeyLogic {
 gamecvs.width = window.innerWidth / 2
 gamecvs.height = window.innerHeight / 2
 
-console.log('structure define ok')
 let engine = new GameEngine(60)
 let player = new RectObj(
   gamecvs.width / 2,
@@ -124,7 +123,6 @@ let test_cube = new RectObj(0, 450, 20, 20, '#ff0000', 1)
 
 engine.scene.add(player)
 engine.scene.add(test_cube)
-console.log('engine define ok')
 
 let kl = new KeyLogic()
 
@@ -158,10 +156,8 @@ function GameLogic () {
   if (collision.checkCollision(player, test_cube)) {
     player.y -= 1
     onground = true
-    console.log(onground)
   }
   if (!onground) {
-    console.log(onground)
     gravityAcceleration += (player.y / gamecvs.height) * 0.9
     player.y += gravity * gravityAcceleration
   } else {
@@ -169,11 +165,9 @@ function GameLogic () {
   }
 }
 
-console.log('game logic define ok')
 function maindraw () {
   engine.draw()
   GameLogic()
-  console.log('drawing :)')
 }
 engine.interval = setInterval(maindraw, 1000 / engine.fps)
-console.log('1 second has passed, end of defining stuff :D')
+console.log('end')
