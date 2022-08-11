@@ -24,44 +24,44 @@ interface ArcObject extends GameObject {
   type: 'arc'
 }
 
-class Renderer {
-  ctx: CanvasRenderingContext2D
+class Scene {
   objects: GameObject[] = []
-  constructor (ctx: CanvasRenderingContext2D, objects: GameObject[]) {
-    this.ctx = ctx,
+  constructor (objects: GameObject[]) {
     this.objects = objects
   }
-  public DrawRect (object: RectObject) {
-    this.ctx.fillStyle = `rgb(${object.color}, ${object.color}, ${object.color})`
-    this.ctx.fillRect(
-      object.position.x,
-      object.position.y,
-      object.size.x,
-      object.size.y
-    )
-  }
+}
 
-  public DrawArc (object: ArcObject) {
-    this.ctx.fillStyle = `rgb(${object.color}, ${object.color}, ${object.color})`
-    this.ctx.beginPath()
-    this.ctx.arc(
-      object.position.x,
-      object.position.y,
-      object.size.x,
-      0,
-      2 * Math.PI
-    )
-    this.ctx.fill()
+class Renderer {
+  ctx: CanvasRenderingContext2D
+  scene: Scene
+  constructor (ctx: CanvasRenderingContext2D, Scene: Scene) {
+    this.ctx = ctx
+    this.scene = Scene
   }
-
-  public Draw (objects: GameObject[]) {
-    objects.forEach(object => {
+  Draw() {
+    this.scene.objects.forEach(object => {
       if (object.type === 'rect') {
-        this.DrawRect(object as RectObject)
+        this.ctx.fillStyle = `rgb(${object.color}, ${object.color}, ${object.color})`
+        this.ctx.fillRect(
+          object.position.x,
+          object.position.y,
+          object.size.x,
+          object.size.y
+        )
       } else if (object.type === 'arc') {
-        this.DrawArc(object as ArcObject)
+        this.ctx.fillStyle = `rgb(${object.color}, ${object.color}, ${object.color})`
+        this.ctx.beginPath()
+        this.ctx.arc(
+          object.position.x,
+          object.position.y,
+          object.size.x,
+          0,
+          2 * Math.PI
+        )
+        this.ctx.fill()
       }
-    })
+    }
+    )
   }
 }
 
@@ -81,6 +81,6 @@ let objects: GameObject[] = [
     type: 'arc'
   }
 ]
-let renderer = new Renderer(ctx, objects)
-renderer.Draw(objects)
-
+let scene = new Scene(objects)
+let renderer = new Renderer(ctx, scene)
+renderer.Draw()
