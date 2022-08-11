@@ -1,0 +1,20 @@
+{
+  "name": "bark-engin",
+  "version": "1.0.0",
+  "description": "learning repository",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc src/Enjin.ts --target esnext --outfile index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Shichiha/bark-engin.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Shichiha/bark-engin/issues"
+  },
+  "homepage": "https://github.com/Shichiha/bark-engin#readme"
+}
