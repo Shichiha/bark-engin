@@ -62,34 +62,8 @@ export class Renderer {
       }
     })
   }
-  // draw shadow
-  DrawShadow () {
-    this.scene.objects.forEach(object => {
-      if (object.type === 'rect') {
-        this.ctx.fillStyle = 'rgba(50, 60, 60, 0.5)'
-        this.ctx.fillRect(
-          object.position.x,
-          object.position.y,
-          object.size.x,
-          object.size.y
-        )
-      } else if (object.type === 'arc') {
-        this.ctx.fillStyle = 'rgba(50, 60, 60, 0.5)'
-        this.ctx.beginPath()
-        this.ctx.arc(
-          object.position.x,
-          object.position.y + 10,
-          object.size.x,
-          0,
-          2 * Math.PI
-        )
-        this.ctx.fill()
-      }
-    })
-  }
 
   Draw () {
-    this.DrawShadow()
     this.DrawObject()
   }
 }
