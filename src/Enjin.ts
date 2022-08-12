@@ -14,6 +14,7 @@ export interface GameObject {
   size: Vector2
   color: number
   type: 'rect' | 'arc'
+  extra?: any
 }
 
 export interface RectObject extends GameObject {
