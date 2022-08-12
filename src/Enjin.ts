@@ -77,14 +77,10 @@ export class Game {
     this.fps = fps
     this.scene = new Scene([])
     this.renderer = new Renderer(context, this.scene)
+    this.context = context
   }
   draw () {
+    this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height)
     this.renderer.Draw()
-    this.context.clearRect(
-      0,
-      0,
-      this.context.canvas.width,
-      this.context.canvas.height
-    )
   }
 }

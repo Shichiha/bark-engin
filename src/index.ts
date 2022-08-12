@@ -7,8 +7,8 @@ let objects: bark.GameObject[] = []
 for (let i = 0; i < 10; i++) {
     objects.push({
         position: {
-            x: Math.random() * (Canvas.width - 100) + 50,
-            y: Math.random() * (Canvas.height - 100) + 50,
+            x: Math.random() * (Canvas.width - 100) ,
+            y: Math.random() * (Canvas.height - 100) ,
             z: 0
         },
         size: {
