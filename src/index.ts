@@ -14,7 +14,6 @@ for (let i = 0; i < 10; i++) {
         size: {
             x: Math.random() * 10 ? 5 : 10,
             y: Math.random() * 10 ? 5 : 10
-
         },
         color: 255,
         type: 'arc'
