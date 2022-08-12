@@ -38,7 +38,7 @@ export class Renderer {
     this.ctx = ctx
     this.scene = Scene
   }
-  Draw () {
+  DrawObject () {
     this.scene.objects.forEach(object => {
       if (object.type === 'rect') {
         this.ctx.fillStyle = `rgb(${object.color}, ${object.color}, ${object.color})`
@@ -62,6 +62,10 @@ export class Renderer {
       }
     })
   }
+
+  Draw () {
+    this.DrawObject()
+  }
 }
 
 export class Game {
@@ -76,5 +80,11 @@ export class Game {
   }
   draw () {
     this.renderer.Draw()
+    this.context.clearRect(
+      0,
+      0,
+      this.context.canvas.width,
+      this.context.canvas.height
+    )
   }
 }
