@@ -1,9 +1,3 @@
-export interface Vector3 {
-  x: number
-  y: number
-  z: number
-}
-
 export interface Vector2 {
   x: number
   y: number
@@ -16,7 +10,7 @@ export interface Color {
   a: number
 }
 export interface GameObject {
-  position: Vector3
+  position: Vector2
   size: Vector2
   color: Color
   type: 'rect' | 'arc'
@@ -88,5 +82,18 @@ export class Game {
   draw () {
     this.context.clearRect(0, 0, this.context.canvas.width, this.context.canvas.height)
     this.renderer.Draw()
+  }
+}
+
+export class KeyLogic {
+  keys: { [key: string]: boolean } = {}
+  constructor () {
+    this.keys = {}
+    document.addEventListener('keydown', e => {
+      this.keys[e.keyCode] = true
+    })
+    document.addEventListener('keyup', e => {
+      this.keys[e.keyCode] = false
+    })
   }
 }

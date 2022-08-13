@@ -9,7 +9,6 @@ for (let i = 0; i < 2000; i++) {
     position: {
       x: Math.random() * Canvas.width,
       y: Math.random() * Canvas.height,
-      z: 0
     },
     size: {
       x: Math.random() * 5,
