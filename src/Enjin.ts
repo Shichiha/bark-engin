@@ -9,10 +9,16 @@ export interface Vector2 {
   y: number
 }
 
+export interface Color {
+  r: number
+  g: number
+  b: number
+  a: number
+}
 export interface GameObject {
   position: Vector3
   size: Vector2
-  color: number
+  color: Color
   type: 'rect' | 'arc'
   extra?: any
 }
@@ -41,8 +47,8 @@ export class Renderer {
   }
   DrawObject () {
     this.scene.objects.forEach(object => {
+      this.ctx.fillStyle = `rgba(${object.color.r}, ${object.color.g}, ${object.color.b}, ${object.color.a})`
       if (object.type === 'rect') {
-        this.ctx.fillStyle = `rgb(${object.color}, ${object.color}, ${object.color})`
         this.ctx.fillRect(
           object.position.x,
           object.position.y,
@@ -50,7 +56,6 @@ export class Renderer {
           object.size.y
         )
       } else if (object.type === 'arc') {
-        this.ctx.fillStyle = `rgb(${object.color}, ${object.color}, ${object.color})`
         this.ctx.beginPath()
         this.ctx.arc(
           object.position.x,
