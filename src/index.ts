@@ -17,7 +17,9 @@ for (let i = 0; i < 2000; i++) {
     b: 217,
     a: 1
   }
-  let object = new bark.GameObject(Position, Radius, Color)
+  let object = new bark.GameObject(Position, Radius, Color, {
+    accel: { x: 0, y: 0, z: 0 },
+  })
   dots.push(object)
 }
 
@@ -38,20 +40,33 @@ let kl = new bark.KeyLogic()
 setInterval(() => {
   if (kl.keys[38]) {
     Game.scene.objects.forEach(object => {
-      object.position.z += 100
+      object.position.z += 10
     })
   } else if (kl.keys[40]) {
     Game.scene.objects.forEach(object => {
-      object.position.z -= 100
+      object.position.z -= 10
     })
   }
   if (kl.keys[37]) {
     Game.renderer.Opts.PROJECTION_CENTER_X += 10
+
     console.log(Game.renderer.Opts.PROJECTION_CENTER_X)
   }
   if (kl.keys[39]) {
     Game.renderer.Opts.PROJECTION_CENTER_X -= 10
     console.log(Game.renderer.Opts.PROJECTION_CENTER_X)
   }
+
+  let gravity = { x: 0, y: 0.1, z: 0 }
+  Game.scene.objects.forEach(object => {
+    object.extra.accel.y += 10 * gravity.y
+    object.position.y = object.position.y + object.extra.accel.y
+
+    if (object.position.y > Canvas.offsetHeight) {
+      object.position.y = Canvas.offsetHeight
+      object.extra.accel.y = 0
+    }
+
+  })
   Game.draw()
 }, 1000 / Game.fps)
