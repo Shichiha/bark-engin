@@ -29,11 +29,18 @@ window.addEventListener('resize', () => {
 })
 Game.renderer.calculateArea()
 setInterval(() => {
-  Game.scene.objects.forEach(object => {
-    object.position.x += (Math.random() - 0.5) * 0.1
-    object.position.y += (Math.random() - 0.5) * 0.1
-    object.position.z += (Math.random() - 0.5) * 0.1
-  })
+  let newPos = []
+  for (let object of Game.scene.objects) {
+    let Position = {
+      x: (Math.random() - 0.5) * Canvas.offsetWidth,
+      y: (Math.random() - 0.5) * Canvas.offsetHeight,
+      z: Math.random() * Game.Canvas.height
+    }
+    newPos.push(Position)
+  }
+  for (let i = 0; i < Game.scene.objects.length; i++) {
+    Game.scene.objects[i].position = newPos[i]
+  }
   Game.draw()
   console.log('Drawing')
 }, 1000 / Game.fps)
