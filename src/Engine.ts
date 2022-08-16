@@ -57,14 +57,6 @@ export class GameObject {
   }
 }
 
-export interface RectObject extends GameObject {
-  type: 'rect'
-}
-
-export interface ArcObject extends GameObject {
-  type: 'arc'
-}
-
 export class Scene {
   objects: GameObject[] = []
   constructor (objects: GameObject[]) {
@@ -72,13 +64,6 @@ export class Scene {
   }
   AddObject (object: GameObject) {
     this.objects.push(object)
-  }
-}
-
-export class Camera {
-  position: ExtendedVector3
-  constructor (position: ExtendedVector3) {
-    this.position = position
   }
 }
 
@@ -96,13 +81,11 @@ export class Renderer {
   Canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
   scene: Scene
-  camera: Camera
   Constants: Constants
 
-  constructor (Canvas: HTMLCanvasElement, Scene: Scene, camera: Camera) {
+  constructor (Canvas: HTMLCanvasElement, Scene: Scene) {
     this.Canvas = Canvas
     this.scene = Scene
-    this.camera = camera
     this.ctx = Canvas.getContext('2d') as CanvasRenderingContext2D
     this.Constants = new Constants(this.Canvas.width * 1,
       this.Canvas.width / 2,
@@ -144,7 +127,6 @@ export class Renderer {
 export class Game {
   fps: number = 60
   scene: Scene
-  camera: Camera
   renderer: Renderer
   Canvas: HTMLCanvasElement
   context: CanvasRenderingContext2D
@@ -153,8 +135,7 @@ export class Game {
     this.scene = new Scene([])
     this.renderer = new Renderer(
       Canvas,
-      this.scene,
-      new Camera({ x: 0, y: 0, z: 0, w: 1, rx: 0, ry: 0, rz: 0 })
+      this.scene
     )
     this.Canvas = Canvas
     this.context = Canvas.getContext('2d') as CanvasRenderingContext2D

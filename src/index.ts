@@ -1,8 +1,6 @@
 import * as bark from './Engine'
 
 let Canvas = document.getElementById('canvas') as HTMLCanvasElement
-let ctx = Canvas.getContext('2d') as CanvasRenderingContext2D
-
 let Game = new bark.Game(60, Canvas)
 let dots = []
 for (let i = 0; i < 2000; i++) {
@@ -38,7 +36,6 @@ function lerpVector3 (a: bark.Vector3, b: bark.Vector3, t: number) {
 
 let kl = new bark.KeyLogic()
 setInterval(() => {
-  //   key "up"
   if (kl.keys[38]) {
     Game.scene.objects.forEach(object => {
       object.position.z += 100
@@ -49,5 +46,4 @@ setInterval(() => {
     })
   }
   Game.draw()
-  console.log('Drawing')
 }, 1000 / Game.fps)
