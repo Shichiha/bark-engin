@@ -87,51 +87,54 @@ export class Renderer {
   ctx: CanvasRenderingContext2D
   scene: Scene
   camera: Camera
-  width: number
-  height: number
-  PERSPECTIVE: number
 
   constructor (Canvas: HTMLCanvasElement, Scene: Scene, camera: Camera) {
     this.Canvas = Canvas
     this.scene = Scene
     this.camera = camera
     this.ctx = Canvas.getContext('2d') as CanvasRenderingContext2D
-    this.PERSPECTIVE = this.width * 0.8
   }
-  onResize () {
-    this.width = this.Canvas.offsetWidth
-    this.height = this.Canvas.offsetHeight
+  calculateArea () {
+    let width = this.Canvas.offsetWidth
+    let height = this.Canvas.offsetHeight
 
     if (window.devicePixelRatio > 1) {
       this.Canvas.width = this.Canvas.clientWidth * 2
       this.Canvas.height = this.Canvas.clientHeight * 2
       this.ctx.scale(2, 2)
     } else {
-      this.Canvas.width = this.width
-      this.Canvas.height = this.height
+      this.Canvas.width = width
+      this.Canvas.height = height
     }
   }
 
   project (object: GameObject) {
-    let PROJECTION_CENTER_X = this.width / 2
-    let PROJECTION_CENTER_Y = this.height / 2
-    let scaleProjected =
-      this.PERSPECTIVE / (this.PERSPECTIVE + object.position.z)
+    let PERSPECTIVE = this.Canvas.height * 0.8
+    let PROJECTION_CENTER_X = this.Canvas.width / 2
+    let PROJECTION_CENTER_Y = this.Canvas.height / 2
+    
+    let scaleProjected = PERSPECTIVE / (PERSPECTIVE + object.position.z)
     let xProjected = object.position.x * scaleProjected + PROJECTION_CENTER_X
     let yProjected = object.position.y * scaleProjected + PROJECTION_CENTER_Y
     let Array = [xProjected, yProjected, scaleProjected]
+    
+    
+    
+    
     return Array
   }
 
   draw (object: GameObject) {
     let [xProjected, yProjected, scaleProjected] = this.project(object)
-    this.ctx.globalAlpha = Math.abs(1 - object.position.z / this.width)
+    this.ctx.globalAlpha = Math.abs(1 - object.position.z / this.Canvas.width)
+    this.ctx.fillStyle = `rgba(${object.color.r}, ${object.color.g}, ${object.color.b}, ${object.color.a})`
     this.ctx.fillRect(
       xProjected - object.radius,
       yProjected - object.radius,
       object.radius * 2 * scaleProjected,
       object.radius * 2 * scaleProjected
     )
+    
   }
   render () {
     for (let object of this.scene.objects) {

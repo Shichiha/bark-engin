@@ -1,4 +1,4 @@
-import * as bark from './Enjin'
+import * as bark from './Engine'
 
 let Canvas = document.getElementById('canvas') as HTMLCanvasElement
 let ctx = Canvas.getContext('2d') as CanvasRenderingContext2D
@@ -12,7 +12,7 @@ for (let i = 0; i < 100; i++) {
   let Position = {
     x: (Math.random() - 1) * Canvas.offsetWidth,
     y: (Math.random() - 1) * Canvas.offsetHeight,
-    z: Math.random() * Game.renderer.width
+    z: Math.random() * Game.Canvas.height
   }
 
   let Radius = 10
@@ -27,6 +27,10 @@ for (let i = 0; i < 100; i++) {
 }
 
 Game.scene.objects = dots
+window.addEventListener('resize', () => {
+  Game.renderer.calculateArea()
+})
+Game.renderer.calculateArea()
 setInterval(() => {
-  Game.draw();
+  Game.draw()
 }, 1000 / Game.fps)
