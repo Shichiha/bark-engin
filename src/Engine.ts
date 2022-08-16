@@ -112,15 +112,12 @@ export class Renderer {
     let PERSPECTIVE = this.Canvas.height * 0.8
     let PROJECTION_CENTER_X = this.Canvas.width / 2
     let PROJECTION_CENTER_Y = this.Canvas.height / 2
-    
+
     let scaleProjected = PERSPECTIVE / (PERSPECTIVE + object.position.z)
     let xProjected = object.position.x * scaleProjected + PROJECTION_CENTER_X
     let yProjected = object.position.y * scaleProjected + PROJECTION_CENTER_Y
     let Array = [xProjected, yProjected, scaleProjected]
-    
-    
-    
-    
+
     return Array
   }
 
@@ -134,7 +131,6 @@ export class Renderer {
       object.radius * 2 * scaleProjected,
       object.radius * 2 * scaleProjected
     )
-    
   }
   render () {
     for (let object of this.scene.objects) {
