@@ -29,5 +29,11 @@ window.addEventListener('resize', () => {
 })
 Game.renderer.calculateArea()
 setInterval(() => {
+  Game.scene.objects.forEach(object => {
+    object.position.x += (Math.random() - 0.5) * 0.1
+    object.position.y += (Math.random() - 0.5) * 0.1
+    object.position.z += (Math.random() - 0.5) * 0.1
+  })
   Game.draw()
+  console.log('Drawing')
 }, 1000 / Game.fps)
