@@ -45,5 +45,13 @@ setInterval(() => {
       object.position.z -= 100
     })
   }
+  if (kl.keys[37]) {
+    Game.renderer.Opts.PROJECTION_CENTER_X += 10
+    console.log(Game.renderer.Opts.PROJECTION_CENTER_X)
+  }
+  if (kl.keys[39]) {
+    Game.renderer.Opts.PROJECTION_CENTER_X -= 10
+    console.log(Game.renderer.Opts.PROJECTION_CENTER_X)
+  }
   Game.draw()
 }, 1000 / Game.fps)
