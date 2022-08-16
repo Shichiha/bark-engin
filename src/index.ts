@@ -5,7 +5,7 @@ let ctx = Canvas.getContext('2d') as CanvasRenderingContext2D
 
 let Game = new bark.Game(60, Canvas)
 let dots = []
-for (let i = 0; i < 1000; i++) {
+for (let i = 0; i < 2000; i++) {
   let Position = {
     x: (Math.random() - 0.5) * Canvas.offsetWidth,
     y: (Math.random() - 0.5) * Canvas.offsetHeight,
@@ -41,11 +41,11 @@ setInterval(() => {
   //   key "up"
   if (kl.keys[38]) {
     Game.scene.objects.forEach(object => {
-      object.position.z += 10
+      object.position.z += 100
     })
   } else if (kl.keys[40]) {
     Game.scene.objects.forEach(object => {
-      object.position.z -= 10
+      object.position.z -= 100
     })
   }
   Game.draw()
