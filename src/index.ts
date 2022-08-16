@@ -43,12 +43,10 @@ setInterval(() => {
     Game.scene.objects.forEach(object => {
         object.position.z += 100
     })
-    // key "down"
     } else if (kl.keys[40]) {
     Game.scene.objects.forEach(object => {
         object.position.z -= 100
     })
-    // key "left"
     
     }
   Game.draw()

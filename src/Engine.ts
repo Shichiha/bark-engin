@@ -151,7 +151,13 @@ export class Game {
       this.context.canvas.width,
       this.context.canvas.height
     )
-    this.renderer.render()
+    this.scene.objects
+      .sort((a, b) => {
+        return a.position.z - b.position.z
+      })
+      .forEach(object => {
+        this.renderer.draw(object)
+      })
   }
 }
 
