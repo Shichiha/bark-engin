@@ -125,7 +125,7 @@ export class Renderer {
         object.radius * 2 * scaleProjected
       )
     } else {
-      this.ctx.globalAlpha = 0
+      this.scene.objects.splice(this.scene.objects.indexOf(object), 1)
     }
   }
   render () {
