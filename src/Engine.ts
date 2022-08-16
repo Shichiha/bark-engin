@@ -110,23 +110,14 @@ export class Renderer {
 
   draw (object: GameObject) {
     let [xProjected, yProjected, scaleProjected] = this.project(object)
-    if (
-      xProjected > -object.radius * scaleProjected &&
-      xProjected < this.Canvas.width + object.radius * scaleProjected &&
-      yProjected > -object.radius * scaleProjected &&
-      yProjected < this.Canvas.height + object.radius * scaleProjected
-    ) {
-      this.ctx.globalAlpha = Math.abs(1 - object.position.z / this.Canvas.width)
-      this.ctx.fillStyle = `rgba(${object.color.r}, ${object.color.g}, ${object.color.b}, ${object.color.a})`
-      this.ctx.fillRect(
-        xProjected - object.radius,
-        yProjected - object.radius,
-        object.radius * 2 * scaleProjected,
-        object.radius * 2 * scaleProjected
-      )
-    } else {
-      this.ctx.globalAlpha = 0
-    }
+    this.ctx.globalAlpha = (xProjected < 0 || xProjected > this.Canvas.width || yProjected < 0 || yProjected > this.Canvas.height) ? 0 : Math.abs(1 - object.position.z / this.Canvas.width)
+    this.ctx.fillStyle = `rgba(${object.color.r}, ${object.color.g}, ${object.color.b}, ${object.color.a})`
+    this.ctx.fillRect(
+      xProjected - object.radius,
+      yProjected - object.radius,
+      object.radius * 2 * scaleProjected,
+      object.radius * 2 * scaleProjected
+    )
   }
   render () {
     for (let object of this.scene.objects) {
