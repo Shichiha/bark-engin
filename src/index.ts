@@ -12,9 +12,9 @@ for (let i = 0; i < 2000; i++) {
 
   let Radius = 10
   let Color = {
-    r: 255,
-    g: 255,
-    b: 255,
+    r: 5,
+    g: 6,
+    b: 217,
     a: 1
   }
   let object = new bark.GameObject(Position, Radius, Color)

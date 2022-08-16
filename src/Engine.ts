@@ -68,10 +68,14 @@ export class Scene {
 }
 
 export class Constants {
-    FOV: number
-    PROJECTION_CENTER_X: number
+  FOV: number
+  PROJECTION_CENTER_X: number
+  PROJECTION_CENTER_Y: number
+  constructor (
+    FOV: number,
+    PROJECTION_CENTER_X: number,
     PROJECTION_CENTER_Y: number
-    constructor (FOV: number, PROJECTION_CENTER_X: number, PROJECTION_CENTER_Y: number) {
+  ) {
     this.FOV = FOV
     this.PROJECTION_CENTER_X = PROJECTION_CENTER_X
     this.PROJECTION_CENTER_Y = PROJECTION_CENTER_Y
@@ -87,17 +91,20 @@ export class Renderer {
     this.Canvas = Canvas
     this.scene = Scene
     this.ctx = Canvas.getContext('2d') as CanvasRenderingContext2D
-    this.Constants = new Constants(this.Canvas.width * 1,
+    this.Constants = new Constants(
+      this.Canvas.width * 1,
       this.Canvas.width / 2,
-      this.Canvas.height / 2)
+      this.Canvas.height / 2
+    )
   }
 
   project (object: GameObject) {
-    
-
-    let sizeProjection = this.Constants.FOV / (this.Constants.FOV + object.position.z)
-    const xProject = (object.position.x * sizeProjection) + this.Constants.PROJECTION_CENTER_X;
-    const yProject = (object.position.y * sizeProjection) + this.Constants.PROJECTION_CENTER_Y;
+    let sizeProjection =
+      this.Constants.FOV / (this.Constants.FOV + object.position.z)
+    const xProject =
+      object.position.x * sizeProjection + this.Constants.PROJECTION_CENTER_X
+    const yProject =
+      object.position.y * sizeProjection + this.Constants.PROJECTION_CENTER_Y
     let Array = [xProject, yProject, sizeProjection]
 
     return Array
@@ -105,9 +112,15 @@ export class Renderer {
 
   draw (object: GameObject) {
     let [xProjected, yProjected, scaleProjected] = this.project(object)
-    this.ctx.globalAlpha = (xProjected < 0 || xProjected > this.Canvas.width || yProjected < 0 || yProjected > this.Canvas.height) ? 0 : Math.abs(1 - object.position.z / this.Canvas.width)
+    this.ctx.globalAlpha =
+      xProjected < 0 ||
+      xProjected > this.Canvas.width ||
+      yProjected < 0 ||
+      yProjected > this.Canvas.height
+        ? 0
+        : Math.abs(1 - object.position.z / this.Canvas.width)
     if (object.position.z < -this.Constants.FOV + object.radius) {
-      return;
+      return
     }
     this.ctx.fillStyle = `rgba(${object.color.r}, ${object.color.g}, ${object.color.b}, ${object.color.a})`
     this.ctx.fillRect(
@@ -133,10 +146,7 @@ export class Game {
   constructor (fps: number, Canvas: HTMLCanvasElement) {
     this.fps = fps
     this.scene = new Scene([])
-    this.renderer = new Renderer(
-      Canvas,
-      this.scene
-    )
+    this.renderer = new Renderer(Canvas, this.scene)
     this.Canvas = Canvas
     this.context = Canvas.getContext('2d') as CanvasRenderingContext2D
   }
