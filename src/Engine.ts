@@ -94,19 +94,6 @@ export class Renderer {
     this.camera = camera
     this.ctx = Canvas.getContext('2d') as CanvasRenderingContext2D
   }
-  calculateArea () {
-    let width = this.Canvas.offsetWidth
-    let height = this.Canvas.offsetHeight
-
-    if (window.devicePixelRatio > 1) {
-      this.Canvas.width = this.Canvas.clientWidth * 2
-      this.Canvas.height = this.Canvas.clientHeight * 2
-      this.ctx.scale(2, 2)
-    } else {
-      this.Canvas.width = width
-      this.Canvas.height = height
-    }
-  }
 
   project (object: GameObject) {
     let PERSPECTIVE = this.Canvas.height * 0.8

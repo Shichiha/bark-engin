@@ -23,37 +23,34 @@ for (let i = 0; i < 100; i++) {
   dots.push(object)
 }
 
-async function tween(a: bark.Vector3, b: bark.Vector3, duration: number) {
-  let start = Date.now()
-  let end = start + duration
-  while (Date.now() < end) {
-    let t = (Date.now() - start) / duration
-    a.x = (1 - t) * a.x + t * b.x
-    a.y = (1 - t) * a.y + t * b.y
-    a.z = (1 - t) * a.z + t * b.z
-    await new Promise(resolve => setTimeout(resolve, 1000 / Game.fps))
+Game.scene.objects = dots
+function lerp (a: number, b: number, t: number) {
+  return a + (b - a) * t
+}
+
+function lerpVector3 (a: bark.Vector3, b: bark.Vector3, t: number) {
+  return {
+    x: lerp(a.x, b.x, t),
+    y: lerp(a.y, b.y, t),
+    z: lerp(a.z, b.z, t)
   }
 }
 
-Game.scene.objects = dots
-window.addEventListener('resize', () => {
-  Game.renderer.calculateArea()
-})
-Game.renderer.calculateArea()
+let kl = new bark.KeyLogic
 setInterval(() => {
-  let newPos = []
-  for (let object of Game.scene.objects) {
-    let Position = {
-    //   tween
-        x: (Math.random() - 0.5) * Canvas.offsetWidth,
-        y: (Math.random() - 0.5) * Canvas.offsetHeight,
-        z: Math.random() * Game.Canvas.height
+//   key "up"
+    if (kl.keys[38]) {
+    Game.scene.objects.forEach(object => {
+        object.position.z += 100
+    })
+    // key "down"
+    } else if (kl.keys[40]) {
+    Game.scene.objects.forEach(object => {
+        object.position.z -= 100
+    })
+    // key "left"
+    
     }
-    newPos.push(Position)
-  }
-  for (let i = 0; i < Game.scene.objects.length; i++) {
-    tween(Game.scene.objects[i].position, newPos[i], 60000)
-  }
   Game.draw()
   console.log('Drawing')
 }, 1000 / Game.fps)
