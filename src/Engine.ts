@@ -96,7 +96,7 @@ export class Renderer {
   }
 
   project (object: GameObject) {
-    let PERSPECTIVE = this.Canvas.height * 0.8
+    let PERSPECTIVE = this.Canvas.height * 1
     let PROJECTION_CENTER_X = this.Canvas.width / 2
     let PROJECTION_CENTER_Y = this.Canvas.height / 2
 
@@ -110,14 +110,23 @@ export class Renderer {
 
   draw (object: GameObject) {
     let [xProjected, yProjected, scaleProjected] = this.project(object)
-    this.ctx.globalAlpha = Math.abs(1 - object.position.z / this.Canvas.width)
-    this.ctx.fillStyle = `rgba(${object.color.r}, ${object.color.g}, ${object.color.b}, ${object.color.a})`
-    this.ctx.fillRect(
-      xProjected - object.radius,
-      yProjected - object.radius,
-      object.radius * 2 * scaleProjected,
-      object.radius * 2 * scaleProjected
-    )
+    if (
+      xProjected > -object.radius * scaleProjected &&
+      xProjected < this.Canvas.width + object.radius * scaleProjected &&
+      yProjected > -object.radius * scaleProjected &&
+      yProjected < this.Canvas.height + object.radius * scaleProjected
+    ) {
+      this.ctx.globalAlpha = Math.abs(1 - object.position.z / this.Canvas.width)
+      this.ctx.fillStyle = `rgba(${object.color.r}, ${object.color.g}, ${object.color.b}, ${object.color.a})`
+      this.ctx.fillRect(
+        xProjected - object.radius,
+        yProjected - object.radius,
+        object.radius * 2 * scaleProjected,
+        object.radius * 2 * scaleProjected
+      )
+    } else {
+      this.ctx.globalAlpha = 0
+    }
   }
   render () {
     for (let object of this.scene.objects) {

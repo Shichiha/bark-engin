@@ -5,11 +5,11 @@ let ctx = Canvas.getContext('2d') as CanvasRenderingContext2D
 
 let Game = new bark.Game(60, Canvas)
 let dots = []
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 1000; i++) {
   let Position = {
     x: (Math.random() - 0.5) * Canvas.offsetWidth,
     y: (Math.random() - 0.5) * Canvas.offsetHeight,
-    z: Math.random() * Game.Canvas.height
+    z: Math.random() * 10000
   }
 
   let Radius = 10
@@ -36,19 +36,18 @@ function lerpVector3 (a: bark.Vector3, b: bark.Vector3, t: number) {
   }
 }
 
-let kl = new bark.KeyLogic
+let kl = new bark.KeyLogic()
 setInterval(() => {
-//   key "up"
-    if (kl.keys[38]) {
+  //   key "up"
+  if (kl.keys[38]) {
     Game.scene.objects.forEach(object => {
-        object.position.z += 100
+      object.position.z += 10
     })
-    } else if (kl.keys[40]) {
+  } else if (kl.keys[40]) {
     Game.scene.objects.forEach(object => {
-        object.position.z -= 100
+      object.position.z -= 10
     })
-    
-    }
+  }
   Game.draw()
   console.log('Drawing')
 }, 1000 / Game.fps)
