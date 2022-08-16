@@ -15,28 +15,6 @@ export class Vector3 extends Vector2 {
   }
 }
 
-export class ExtendedVector3 extends Vector3 {
-  w: number
-  rx: number
-  ry: number
-  rz: number
-  constructor (
-    x: number,
-    y: number,
-    z: number,
-    w: number,
-    rx: number,
-    ry: number,
-    rz: number
-  ) {
-    super(x, y, z)
-    this.w = w
-    this.rx = rx
-    this.ry = ry
-    this.rz = rz
-  }
-}
-
 export interface Color {
   r: number
   g: number
@@ -44,26 +22,17 @@ export interface Color {
   a: number
 }
 
-export class GameObject {
+export interface GameObject {
   position: Vector3
   radius: number
   color: Color
   extra?: any
-  constructor (position: Vector3, radius: number, color: Color, extra?: any) {
-    this.position = position
-    this.radius = radius
-    this.color = color
-    this.extra = extra
-  }
 }
 
 export class Scene {
   objects: GameObject[] = []
   constructor (objects: GameObject[]) {
     this.objects = objects
-  }
-  AddObject (object: GameObject) {
-    this.objects.push(object)
   }
 }
 
@@ -104,20 +73,12 @@ export class Renderer {
       object.position.x * sizeProjection + this.Opts.PROJECTION_CENTER_X
     const yProject =
       object.position.y * sizeProjection + this.Opts.PROJECTION_CENTER_Y
-    let Array = [xProject, yProject, sizeProjection]
-
-    return Array
+    return [xProject, yProject, sizeProjection]
   }
 
   draw (object: GameObject) {
     let [xProjected, yProjected, scaleProjected] = this.project(object)
-    this.ctx.globalAlpha =
-      xProjected < 0 ||
-      xProjected > this.Canvas.width ||
-      yProjected < 0 ||
-      yProjected > this.Canvas.height
-        ? 0
-        : Math.abs(1 - object.position.z / this.Canvas.width)
+    this.ctx.globalAlpha = Math.abs(1 - object.position.z / this.Opts.FOV)
     if (object.position.z < -this.Opts.FOV + object.radius) {
       return
     }
@@ -130,9 +91,9 @@ export class Renderer {
     )
   }
   render () {
-    for (let object of this.scene.objects) {
+    this.scene.objects.forEach(object => {
       this.draw(object)
-    }
+    })
   }
 }
 
@@ -156,25 +117,16 @@ export class Game {
       this.context.canvas.width,
       this.context.canvas.height
     )
-    this.scene.objects
-      .sort((a, b) => {
-        return a.position.z - b.position.z
-      })
-      .forEach(object => {
-        this.renderer.draw(object)
-      })
+    this.scene.objects.sort((a, b) => a.position.z - b.position.z).forEach(object => {
+      this.renderer.draw(object)
+    })
   }
 }
-
 export class KeyLogic {
   keys: { [key: string]: boolean } = {}
   constructor () {
     this.keys = {}
-    document.addEventListener('keydown', e => {
-      this.keys[e.keyCode] = true
-    })
-    document.addEventListener('keyup', e => {
-      this.keys[e.keyCode] = false
-    })
+    document.addEventListener('keydown', e => { this.keys[e.keyCode] = true  })
+    document.addEventListener('keyup'  , e => { this.keys[e.keyCode] = false })
   }
 }

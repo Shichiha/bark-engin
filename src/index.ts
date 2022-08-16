@@ -4,23 +4,23 @@ let Canvas = document.getElementById('canvas') as HTMLCanvasElement
 let Game = new bark.Game(60, Canvas)
 let dots = []
 for (let i = 0; i < 2000; i++) {
-  let Position = {
+  let position = {
     x: (Math.random() - 0.5) * Canvas.offsetWidth,
     y: (Math.random() - 0.5) * Canvas.offsetHeight,
     z: Math.random() * 10000
   }
 
-  let Radius = 5
-  let Color = {
+  let radius = 5
+  let color = {
     r: 5,
     g: 6,
     b: 217,
     a: 1
   }
-  let object = new bark.GameObject(Position, Radius, Color, {
+  let object: bark.GameObject = {position, radius, color, extra: {
     accel: { x: 0, y: 0, z: 0 },
     potential: { x: 0, y: 0, z: 0 },
-  })
+  }}
   dots.push(object)
 }
 
