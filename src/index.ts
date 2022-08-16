@@ -23,6 +23,18 @@ for (let i = 0; i < 100; i++) {
   dots.push(object)
 }
 
+async function tween(a: bark.Vector3, b: bark.Vector3, duration: number) {
+  let start = Date.now()
+  let end = start + duration
+  while (Date.now() < end) {
+    let t = (Date.now() - start) / duration
+    a.x = (1 - t) * a.x + t * b.x
+    a.y = (1 - t) * a.y + t * b.y
+    a.z = (1 - t) * a.z + t * b.z
+    await new Promise(resolve => setTimeout(resolve, 1000 / Game.fps))
+  }
+}
+
 Game.scene.objects = dots
 window.addEventListener('resize', () => {
   Game.renderer.calculateArea()
@@ -32,14 +44,15 @@ setInterval(() => {
   let newPos = []
   for (let object of Game.scene.objects) {
     let Position = {
-      x: (Math.random() - 0.5) * Canvas.offsetWidth,
-      y: (Math.random() - 0.5) * Canvas.offsetHeight,
-      z: Math.random() * Game.Canvas.height
+    //   tween
+        x: (Math.random() - 0.5) * Canvas.offsetWidth,
+        y: (Math.random() - 0.5) * Canvas.offsetHeight,
+        z: Math.random() * Game.Canvas.height
     }
     newPos.push(Position)
   }
   for (let i = 0; i < Game.scene.objects.length; i++) {
-    Game.scene.objects[i].position = newPos[i]
+    tween(Game.scene.objects[i].position, newPos[i], 60000)
   }
   Game.draw()
   console.log('Drawing')
