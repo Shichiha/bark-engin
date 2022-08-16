@@ -10,7 +10,7 @@ for (let i = 0; i < 2000; i++) {
     z: Math.random() * 10000
   }
 
-  let Radius = 10
+  let Radius = 5
   let Color = {
     r: 5,
     g: 6,
@@ -19,6 +19,7 @@ for (let i = 0; i < 2000; i++) {
   }
   let object = new bark.GameObject(Position, Radius, Color, {
     accel: { x: 0, y: 0, z: 0 },
+    potential: { x: 0, y: 0, z: 0 },
   })
   dots.push(object)
 }
@@ -61,10 +62,10 @@ setInterval(() => {
   Game.scene.objects.forEach(object => {
     object.extra.accel.y += 10 * gravity.y
     object.position.y = object.position.y + object.extra.accel.y
-
+    object.extra.potential.y = object.extra.accel.y / 1.5
     if (object.position.y > Canvas.offsetHeight) {
       object.position.y = Canvas.offsetHeight
-      object.extra.accel.y = 0
+      object.extra.accel.y = -object.extra.potential.y
     }
 
   })
